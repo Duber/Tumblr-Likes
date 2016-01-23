@@ -1,0 +1,55 @@
+div.node {
+  width: auto;
+  height: auto;
+  padding: 0;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+ul.column {
+    padding:0;
+    margin:0;
+    list-style:none;
+    height:auto;
+    float:left;
+    position:relative;
+}
+
+div.container {
+    width: 100%;
+}
+
+a.brick {
+    min-height: 82px;
+}
+
+#content .heading {
+    padding: 20px 0 13px 0;
+}
+
+#content {
+    margin-left: auto;
+    margin-right: auto;
+    width: 1075px;
+}
+
+.centerText {
+    text-align: center;
+}
+
+#content .brick .title.popoutText {
+    position:absolute;
+    z-index:100;
+    top: 25%;
+    color: white;
+    text-shadow: black 0.1em 0.1em 0.2em;
+    font-size: 14px;
+}
+
+.date sup {
+    font-size: 10px;
+}
+
+#pagination {
+    clear: both;
+}
