@@ -20,7 +20,7 @@ class @Likes
 		next = if runs is 1 then etc else -> getLikes(runs- 1, etc)
 
 		# --- GET /v2/user/likes ---
-		Likes.tumblr.get "https://api.tumblr.com/v2/user/likes"
+		Likes.tumblr.get "https://api.tumblr.com/v2/user/likes?offset="+currentOffset
 			.done (data) ->
 				console.log "200 OK /v2/user/likes" if @debug
 				console.log data
