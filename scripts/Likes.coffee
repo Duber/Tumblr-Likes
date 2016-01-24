@@ -1,7 +1,7 @@
 #= require ContentHelper
 
 class @Likes
-	@debug = true
+	@debug = false
 	@tumblr
 
 	currentOffset = 0
@@ -78,7 +78,7 @@ class @Likes
 
 	setHeaderInfoComplete = (likesCount, userName, primaryUrl) ->
 		blog = $("#nav a.blog_title")
-		text = "#{userName} &mdash; You like #{likesCount} posts!"
+		text = "Hello #{userName}"
 		blog.attr("href", primaryUrl)
 		blog.html(text)
 	;
@@ -136,6 +136,7 @@ class @Likes
 
 		# TODO: redirect to '/' if user not login yet ---
 		setHeaderInfo()
+		ContentHelper.createColumns()
 		getLikes(2)
 		scrollWatch()
 

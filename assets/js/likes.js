@@ -27,7 +27,7 @@
   })();
 
   ContentHelper = (function() {
-    var COLUMNS, MIN_HEIGHT, MONTHS, MONTHS_SHORT, append, appendMonth, createContext, lastMonth, makeDate, makeTime, renderPartial, renderTemplate, sections, setContextForAnswer, setContextForAudio, setContextForChat, setContextForPhoto, setContextForQuote, setContextForVideo, templateCache;
+    var COLUMNS, MIN_HEIGHT, MONTHS, MONTHS_SHORT, append, container, createContext, lastMonth, makeDate, makeTime, renderPartial, renderTemplate, setContextForAnswer, setContextForAudio, setContextForChat, setContextForPhoto, setContextForQuote, setContextForVideo, templateCache;
 
     function ContentHelper() {}
 
@@ -45,10 +45,10 @@
 
     templateCache = {};
 
-    sections = {};
+    container = "";
 
     ContentHelper.setContent = function(posts) {
-      var ctx, date, j, len, post, results, sectionName, thumbnail;
+      var ctx, date, j, len, post, results, thumbnail;
       if (this.debug) {
         console.log("received posts:");
         console.log(posts);
@@ -57,10 +57,6 @@
       for (j = 0, len = posts.length; j < len; j++) {
         post = posts[j];
         date = new Date(post.timestamp * 1000);
-        sectionName = (date.getYear()) + ":" + (date.getMonth());
-        if (date.getMonth() !== lastMonth) {
-          appendMonth("<div class=\"heading\">" + MONTHS[date.getMonth()] + " " + (date.getFullYear()) + "</div>", sectionName);
-        }
         ctx = createContext();
         ctx.date = {
           year: date.getYear(),
@@ -114,7 +110,7 @@
           ctx.text = ctx.text.substring(0, 180) + " [...]";
         }
         lastMonth = date.getMonth();
-        results.push(append(renderTemplate("node", ctx), sectionName));
+        results.push(append(renderTemplate("node", ctx)));
       }
       return results;
     };
@@ -257,31 +253,24 @@
       return ctx.thumbnail = thumbnail;
     };
 
-    appendMonth = function(html, sectionName) {
-      var container, i, section;
-      section = sections[sectionName];
-      if (!section) {
-        container = $("<div class=\"container\">");
-        container.append(html);
-        i = 0;
-        while (i < COLUMNS) {
-          container.append($("<ul class=\"column\">"));
-          ++i;
-        }
-        section = container;
-        sections[sectionName] = section;
-        return $(".grid").append(section);
+    ContentHelper.createColumns = function() {
+      var i;
+      container = $("<div class=\"container\">");
+      i = 0;
+      while (i < COLUMNS) {
+        container.append($("<ul class=\"column\">"));
+        ++i;
       }
+      return $(".grid").append(container);
     };
 
-    append = function(html, sectionName) {
-      var col, node, nodes, section;
-      section = sections[sectionName];
-      nodes = section.find("div.brick");
+    append = function(html) {
+      var col, node, nodes;
+      nodes = container.find("div.brick");
       col = nodes.length % COLUMNS;
       node = $("<li class=\"stack\" style=\"display:none;\">");
       node.append(html);
-      $(section.find("ul.column")[col]).append(node);
+      $(container.find("ul.column")[col]).append(node);
       return node.fadeIn(600);
     };
 
@@ -320,7 +309,7 @@
 
     function Likes() {}
 
-    Likes.debug = true;
+    Likes.debug = false;
 
     Likes.tumblr;
 
@@ -412,7 +401,7 @@
     setHeaderInfoComplete = function(likesCount, userName, primaryUrl) {
       var blog, text;
       blog = $("#nav a.blog_title");
-      text = userName + " &mdash; You like " + likesCount + " posts!";
+      text = "Hello " + userName;
       blog.attr("href", primaryUrl);
       return blog.html(text);
     };
@@ -470,6 +459,7 @@
       console.log("Get cached credentials");
       Likes.tumblr = OAuth.create("tumblr");
       setHeaderInfo();
+      ContentHelper.createColumns();
       getLikes(2);
       return scrollWatch();
     };
