@@ -1,7 +1,7 @@
 
 class ContentContext
-	MAX_HEIGHT = 100
-	MAX_WIDTH = 100
+	MAX_HEIGHT = 200
+	MAX_WIDTH = 200
 	
 	@setContextForChat = (post, ctx) ->
 		ctx.type = "conversation"
@@ -87,5 +87,7 @@ class ContentContext
 		thumbnail.url = post.thumbnail_url
 		thumbnail.height = if post.thumbnail_height > MAX_HEIGHT then MAX_HEIGHT else post.thumbnail_height
 		thumbnail.width = if post.thumbnail_width > MAX_WIDTH then MAX_WIDTH else post.thumbnail_width
+		#thumbnail.height = post.thumbnail_height
+		#thumbnail.width = post.thumbnail_width
 		ctx.thumbnail = thumbnail
 	;

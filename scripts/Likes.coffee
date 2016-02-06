@@ -117,7 +117,7 @@ class @Likes
 			if win.scrollTop() >= $(document).height() - win.height() - 200
 				return if isScrolling
 				isScrolling = true
-				getLikes(1, ->
+				getLikes(2, ->
 					isScrolling = false
 				)
 			;

@@ -31,9 +31,9 @@
 
     function ContentContext() {}
 
-    MAX_HEIGHT = 100;
+    MAX_HEIGHT = 200;
 
-    MAX_WIDTH = 100;
+    MAX_WIDTH = 200;
 
     ContentContext.setContextForChat = function(post, ctx) {
       var chat, lcv, results;
@@ -407,7 +407,7 @@
             return;
           }
           isScrolling = true;
-          return getLikes(1, function() {
+          return getLikes(2, function() {
             return isScrolling = false;
           });
         }
