@@ -18,7 +18,6 @@ class ContentHelper
 	]
 
 	@debug = false
-	lastMonth = -1
 	templateCache = {}
 	container = ""
 
@@ -29,17 +28,8 @@ class ContentHelper
 		#posts.sort((a, b) -> b.timestamp - a.timestamp)
 
 		for post in posts
-			# should we add a month divider?
-			date = new Date(post.timestamp * 1000)
-
 			#templating
 			ctx = createContext()
-			ctx.date =
-				year: date.getYear()
-				month: date.getMonth()
-				day: date.getDay()
-				shortForm: makeDate(date.getMonth(), date.getDate())
-				time: makeTime(date.getHours(), date.getMinutes())
 
 			ctx.id = post.id
 			ctx.key = post.reblog_key
@@ -71,7 +61,6 @@ class ContentHelper
 
 			# if text is too big, truncate it
 			ctx.text = ctx.text.substring(0, 180) + " [...]" if ctx.text.length > 180
-			lastMonth = date.getMonth()
 			append(renderTemplate("node", ctx))
 		;
 	;
@@ -140,27 +129,3 @@ class ContentHelper
 		node.fadeIn(600)
 	;
 
-	makeDate = (month, day) ->
-		day += 1
-		str = ""
-
-		if day is 1 or day is 21 or day is 31
-			str = "st"
-		else if day is 2 or day is 22
-			str = "nd"
-		else if day is 3 or day is 23
-			str = "rd"
-		else
-			str = "th"
-
-		str = "#{MONTHS_SHORT[month]}. #{day}<sup>#{str}</sup>"
-		return str
-	;
-
-	makeTime = (hours, minutes) ->
-		pm = hours >= 12
-		str = (hours % 12) + ":"
-		str += (if minutes < 10 then "0" else "") + minutes
-		str += if pm then "pm" else "am"
-		return str
-	;

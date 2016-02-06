@@ -128,7 +128,7 @@
   })();
 
   ContentHelper = (function() {
-    var COLUMNS, MAX_HEIGHT, MAX_WIDTH, MONTHS, MONTHS_SHORT, append, container, createContext, lastMonth, makeDate, makeTime, renderPartial, renderTemplate, templateCache;
+    var COLUMNS, MAX_HEIGHT, MAX_WIDTH, MONTHS, MONTHS_SHORT, append, container, createContext, renderPartial, renderTemplate, templateCache;
 
     function ContentHelper() {}
 
@@ -144,14 +144,12 @@
 
     ContentHelper.debug = false;
 
-    lastMonth = -1;
-
     templateCache = {};
 
     container = "";
 
     ContentHelper.setContent = function(posts) {
-      var ctx, date, j, len, post, results;
+      var ctx, j, len, post, results;
       if (this.debug) {
         console.log("received posts:");
         console.log(posts);
@@ -159,15 +157,7 @@
       results = [];
       for (j = 0, len = posts.length; j < len; j++) {
         post = posts[j];
-        date = new Date(post.timestamp * 1000);
         ctx = createContext();
-        ctx.date = {
-          year: date.getYear(),
-          month: date.getMonth(),
-          day: date.getDay(),
-          shortForm: makeDate(date.getMonth(), date.getDate()),
-          time: makeTime(date.getHours(), date.getMinutes())
-        };
         ctx.id = post.id;
         ctx.key = post.reblog_key;
         ctx.type = post.type;
@@ -204,7 +194,6 @@
         if (ctx.text.length > 180) {
           ctx.text = ctx.text.substring(0, 180) + " [...]";
         }
-        lastMonth = date.getMonth();
         results.push(append(renderTemplate("node", ctx)));
       }
       return results;
@@ -273,32 +262,6 @@
       node.append(html);
       $(container.find("ul.column")[col]).append(node);
       return node.fadeIn(600);
-    };
-
-    makeDate = function(month, day) {
-      var str;
-      day += 1;
-      str = "";
-      if (day === 1 || day === 21 || day === 31) {
-        str = "st";
-      } else if (day === 2 || day === 22) {
-        str = "nd";
-      } else if (day === 3 || day === 23) {
-        str = "rd";
-      } else {
-        str = "th";
-      }
-      str = MONTHS_SHORT[month] + ". " + day + "<sup>" + str + "</sup>";
-      return str;
-    };
-
-    makeTime = function(hours, minutes) {
-      var pm, str;
-      pm = hours >= 12;
-      str = (hours % 12) + ":";
-      str += (minutes < 10 ? "0" : "") + minutes;
-      str += pm ? "pm" : "am";
-      return str;
     };
 
     return ContentHelper;
