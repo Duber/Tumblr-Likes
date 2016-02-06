@@ -7,16 +7,6 @@ class ContentHelper
 	MAX_HEIGHT = 100
 	MAX_WIDTH = 100
 
-	MONTHS = [
-		"January", "February", "March", "April", "May", "June",
-		"July", "August", "September", "October", "November", "December"
-	]
-
-	MONTHS_SHORT = [
-		"Jan", "Feb", "Mar", "Apr", "May", "Jun",
-		"Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-	]
-
 	@debug = false
 	templateCache = {}
 	container = ""
