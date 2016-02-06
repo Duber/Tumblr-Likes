@@ -127,7 +127,6 @@ class @Likes
 	# - - -- - --- - -- - - -- - - - ---- -  -- - -- -- - - -  - - - ---- -- - - -
 
 	@startUp = ->
-		console.log "Tumblr Likes Grid, by Ben Fagin\nhttp://life.unquietcode.com\n\n"
 		console.log "Initialize Oauth.js"
 		OAuth.initialize 'eUqCWTW-6VpWWcOvj8edJ6aKNUo'
 
