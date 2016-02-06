@@ -1,9 +1,11 @@
 #=require UQC
+#= require ContentContext
 
 
 class ContentHelper
-	COLUMNS = 8
-	MIN_HEIGHT = null
+	COLUMNS = 5
+	MAX_HEIGHT = 100
+	MAX_WIDTH = 100
 
 	MONTHS = [
 		"January", "February", "March", "April", "May", "June",
@@ -42,30 +44,23 @@ class ContentHelper
 			ctx.id = post.id
 			ctx.key = post.reblog_key
 			ctx.type = post.type
-			ctx.url = post.post_url #post.link_url || post.post_url;
+			ctx.url = post.image_permalink or post.post_url
 			ctx.user = post.blog_name
 			ctx.noteCount = post.note_count
 			ctx.caption = post.caption or ""
 			ctx.text = post.body or ""
 			ctx.title = post.title or null
-			ctx.height = 125
 
 			switch post.type
-				when "video"  then setContextForVideo(post, ctx)
-				when "audio"  then setContextForAudio(post, ctx)
-				when "photo"  then setContextForPhoto(post, ctx)
-				when "quote"  then setContextForQuote(post, ctx)
-				when "chat"   then setContextForChat(post, ctx)
-				when "answer" then setContextForAnswer(post, ctx)
+				when "video"  then ContentContext.setContextForVideo(post, ctx)
+				when "audio"  then ContentContext.setContextForAudio(post, ctx)
+				when "photo"  then ContentContext.setContextForPhoto(post, ctx)
+				when "quote"  then ContentContext.setContextForQuote(post, ctx)
+				when "chat"   then ContentContext.setContextForChat(post, ctx)
+				when "answer" then ContentContext.setContextForAnswer(post, ctx)
 
 			# thumbnail dimensions
-			thumbnail = ctx.thumbnail
-
-			if thumbnail and thumbnail.height and thumbnail.height < ctx.height
-				if thumbnail.height < MIN_HEIGHT
-					ctx.height = MIN_HEIGHT
-				else
-					ctx.height = thumbnail.height
+			ctx.height = ctx.thumbnail.height or MIN_HEIGHT
 
 			# strip html from text
 			#ctx.text = uqc.lib.stripHTML(ctx.text);
@@ -118,93 +113,6 @@ class ContentHelper
 		{
 			dynamicPartial: -> renderPartial
 		}
-	;
-
-	# --- content methods ---
-
-	setContextForChat = (post, ctx) ->
-		ctx.type = "conversation"
-		ctx.chat = []
-		chat = ctx.chat
-		lcv = 0
-
-		while lcv < post.dialogue.length
-			if lcv % 2 is 0
-				chat[lcv] = {}
-				chat[lcv].first = post.dialogue[lcv]
-			else
-				chat[lcv - 1].second = post.dialogue[lcv]
-			++lcv
-		;
-	;
-
-	setContextForAnswer = (post, ctx) ->
-		ctx.theQuestion = post.question or ""
-		ctx.theAnswer = post.answer or ""
-		ctx.theAsker = post.asking_name or ""
-	;
-
-	setContextForQuote = (post, ctx) ->
-		ctx.text = post.text
-		ctx.source = post.source
-	;
-
-	setContextForPhoto = (post, ctx) ->
-		ctx.thumbnail = { url: "#" }
-		thumbnail = ctx.thumbnail
-
-		if post.photos.length > 0
-			sizes = post.photos[0].alt_sizes
-			img = if sizes.length-3 < 0 then sizes.length-1 else sizes.length-3
-			img = sizes[img]
-			thumbnail.url = img.url
-			thumbnail.height = img.height
-			thumbnail.width = img.width
-		;
-	;
-
-	setContextForAudio = (post, ctx) ->
-		ctx.text = post.caption
-		info = ""
-
-		if post.artist and post.artist.length > 0
-			if post.track_name and post.track_name.length > 0
-				info = "#{post.artist} - #{post.track_name}"
-			else
-				info = post.artist
-		;
-
-		info += "<br/>" + post.album  if post.album and post.album.length > 0
-		ctx.info = if info.length > 0 then info else null
-		ctx.thumbnail = post.album_art if post.album_art and post.album_art.length > 0
-	;
-
-	setContextForVideo = (post, ctx) ->
-		thumbnail = { url: "#" }
-
-		if post.player and post.player.length > 0
-			raw = post.player[0].embed_code
-			iStart = raw.indexOf("'poster=")
-			iEnd = raw.length - 10 # because we know it is towards the end
-
-			# we found some frames
-			unless iStart is -1
-				frameText = raw.substring(iStart + 8, iEnd - 1)
-				frames = frameText.split(",")
-				x = 0
-
-				while x < frames.length
-					frames[x] = { url: decodeURIComponent(frames[x]) }
-					++x
-
-				ctx.frames = frames
-			;
-		;
-
-		thumbnail.url = post.thumbnail_url
-		thumbnail.height = post.thumbnail_height
-		thumbnail.width = post.thumbnail_width
-		ctx.thumbnail = thumbnail
 	;
 
 	# --- helpers ---

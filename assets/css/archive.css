@@ -313,8 +313,8 @@ button.chrome[disabled] {
 	position: relative;
 	display: block;
 	float: left;
-	width: 125px;
-	height: 125px;
+	/*width: 125px;*/
+	/*height: 125px;*/
 	background: url('/assets/images/archive_brick.png') center no-repeat #d8dadd;
 	margin: 0 6px 6px 0;
 	padding: 0;
