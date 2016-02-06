@@ -3,9 +3,7 @@
 
 
 class ContentHelper
-	COLUMNS = 5
-	MAX_HEIGHT = 100
-	MAX_WIDTH = 100
+	COLUMNS = 7
 
 	@debug = false
 	templateCache = {}
@@ -114,7 +112,6 @@ class ContentHelper
 		col = (nodes.length) % COLUMNS
 		node = $("<li class=\"stack\" style=\"display:none;\">")
 		node.append(html)
-		#$($(".grid .container:last ul.column")[col]).append(node)
 		$(container.find("ul.column")[col]).append(node)
 		node.fadeIn(600)
 	;

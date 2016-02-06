@@ -134,15 +134,11 @@
   })();
 
   ContentHelper = (function() {
-    var COLUMNS, MAX_HEIGHT, MAX_WIDTH, append, container, createContext, renderPartial, renderTemplate, templateCache;
+    var COLUMNS, append, container, createContext, renderPartial, renderTemplate, templateCache;
 
     function ContentHelper() {}
 
-    COLUMNS = 5;
-
-    MAX_HEIGHT = 100;
-
-    MAX_WIDTH = 100;
+    COLUMNS = 7;
 
     ContentHelper.debug = false;
 
