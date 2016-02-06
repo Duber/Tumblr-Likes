@@ -27,7 +27,13 @@
   })();
 
   ContentContext = (function() {
+    var MAX_HEIGHT, MAX_WIDTH;
+
     function ContentContext() {}
+
+    MAX_HEIGHT = 100;
+
+    MAX_WIDTH = 100;
 
     ContentContext.setContextForChat = function(post, ctx) {
       var chat, lcv, results;
@@ -128,7 +134,7 @@
   })();
 
   ContentHelper = (function() {
-    var COLUMNS, MAX_HEIGHT, MAX_WIDTH, MONTHS, MONTHS_SHORT, append, container, createContext, renderPartial, renderTemplate, templateCache;
+    var COLUMNS, MAX_HEIGHT, MAX_WIDTH, append, container, createContext, renderPartial, renderTemplate, templateCache;
 
     function ContentHelper() {}
 
@@ -137,10 +143,6 @@
     MAX_HEIGHT = 100;
 
     MAX_WIDTH = 100;
-
-    MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-
-    MONTHS_SHORT = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
     ContentHelper.debug = false;
 

@@ -1,5 +1,8 @@
 
 class ContentContext
+	MAX_HEIGHT = 100
+	MAX_WIDTH = 100
+	
 	@setContextForChat = (post, ctx) ->
 		ctx.type = "conversation"
 		ctx.chat = []
