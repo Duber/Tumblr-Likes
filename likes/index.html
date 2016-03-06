@@ -11,7 +11,7 @@
     <script type="text/javascript">
         $(function() {
             Likes.startUp();
-			$("a.remove").live("click", function() {
+			$("a.remove").on("click", function() {
 				var xBox = $(this);
 
 				if (xBox.hasClass("active")) {
@@ -26,7 +26,7 @@
 				return false;
 			});
             $("#logout").click(function(){
-               // ToDo: clear oauth
+               OAuth.clearCache();
                window.location = "/end.html";
             });
         });
