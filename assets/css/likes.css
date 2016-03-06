@@ -52,3 +52,12 @@ a.brick {
 #pagination {
     clear: both;
 }
+
+#content .brick .overlay div.remove {
+    color: white;
+    border: 1px solid white;
+    width: 14px;
+    margin-left: 82%;
+    margin-top: 3%;
+    display: block;
+}

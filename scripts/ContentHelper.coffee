@@ -1,5 +1,4 @@
-#=require UQC
-#= require ContentContext
+#=require ContentContext
 
 
 class ContentHelper
@@ -41,7 +40,6 @@ class ContentHelper
 			ctx.height = ctx.thumbnail.height or MIN_HEIGHT
 
 			# strip html from text
-			#ctx.text = uqc.lib.stripHTML(ctx.text);
 			ctx.text = $("<div>" + ctx.text + "</div>").text()
 
 			# if title is too big, truncate it
@@ -82,7 +80,7 @@ class ContentHelper
 	;
 
 	renderPartial = (partial, render) ->
-		partial = UQC.trim(render(partial))
+		partial = trim(render(partial))
 		renderTemplate(partial, this)
 	;
 
@@ -114,5 +112,9 @@ class ContentHelper
 		node.append(html)
 		$(container.find("ul.column")[col]).append(node)
 		node.fadeIn(600)
+	;
+
+	trim = (string) ->
+		string.replace /^\s*|\s*$/g, ""
 	;
 
