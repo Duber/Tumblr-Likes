@@ -128,7 +128,7 @@ class @Likes
 
 	@startUp = ->
 		console.log "Initialize Oauth.js"
-		OAuth.initialize 'v9UrevHg6LXweUdAjasr06NsdY4'
+		OAuth.initialize "v9UrevHg6LXweUdAjasr06NsdY4"
 
 		console.log "Get cached credentials"
 		Likes.tumblr = OAuth.create "tumblr"
