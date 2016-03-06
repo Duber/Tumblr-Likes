@@ -2,30 +2,9 @@
 <html>
     <head>
         <title>Tumblr Likes</title>
-        <!-- Oauth.io Javascript SDK -->
-        <script type="text/javascript" src="assets/libs/oauth.min.js"></script>
-        <script type="text/javascript" src="assets/libs/jquery-1.7.1.min.js"></script>
-        <script type="text/javascript">
-            $(function(){
-                console.log("Initialize Oauth.js");
-                OAuth.initialize('eUqCWTW-6VpWWcOvj8edJ6aKNUo');
-                $("#signin").click(function(){
-                    console.log("#signin clicked");
-                    // start oauth
-                    OAuth.popup('tumblr', {cache: true}).done(function(tumblr) {
-                        // make API calls with `facebook`
-                        console.log("User succesfully logedin");
-                        console.log(tumblr);
-
-                        // redirect to /likes
-                        window.location = "likes";
-                    }).fail(function(err) {
-                        // todo when the OAuth flow failed
-                        console.log("oauth fail: " + err);
-                    });
-                });
-            });
-        </script>
+        <script type="text/javascript" src="//code.jquery.com/jquery-1.12.1.min.js"></script>
+        <script type="text/javascript" src="/assets/libs/oauth.min.js"></script>
+        <script type="text/javascript" src="/assets/js/likesLogin.js"></script>
         <style type="text/css">
             #content {
                 width: 400px;
