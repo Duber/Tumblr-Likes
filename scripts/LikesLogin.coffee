@@ -1,6 +1,7 @@
 $ ->
 	$("#signin").click ->
-		OAuth.initialize("eUqCWTW-6VpWWcOvj8edJ6aKNUo", {"cache" : true})
+		OAuth.clearCache();
+		OAuth.initialize("v9UrevHg6LXweUdAjasr06NsdY4", {"cache" : true})
 		OAuth.popup 'tumblr'
 			.done (result) ->
 				window.location = "/likes";
