@@ -1,4 +1,5 @@
 #= require ContentHelper
+#= require Header
 
 class Likes
 	@debug = false
@@ -6,7 +7,6 @@ class Likes
 	currentOffset = 0
 	isScrolling = false
 	isFinished = false
-
 
 	# --- get likes from server  ---
 
@@ -27,7 +27,6 @@ class Likes
 				next()
 			.fail (err) ->
 				console.log err if @debug
-				failForLikes()
 				next()
 
 		currentOffset += 20
@@ -46,64 +45,22 @@ class Likes
 		ContentHelper.setContent(data.response.liked_posts)
 	;
 
-	failForLikes = (data) ->
-		console.log "failure"
-		console.log data
-	;
-
-	# --- user info in header ---
-
-	setHeaderInfo = () ->
-		# --- get user info ---
-		Tumblr.get "https://api.tumblr.com/v2/user/info"
-			.done (data) ->
-				console.log "200 OK /v2/user/info" if @debug
-				successForUserInfo(data)
-			.fail (err) ->
-				console.log err if @debug
-				failForUserInfo(data)
-	;
-
-	successForUserInfo = (data) ->
-		console.log "got user data" if @debug
-		console.log data
-		setHeaderInfoComplete(data.response.user.likes, data.response.user.name, data.response.user.blogs[0].url)
-	;
-
-	failForUserInfo = (data) ->
-		console.log "GET /v2/user/info fail"
-		console.log data
-	;
-
-	setHeaderInfoComplete = (likesCount, userName, primaryUrl) ->
-		blog = $("#nav a.blog_title")
-		text = "Hello #{userName}"
-		blog.attr("href", primaryUrl)
-		blog.html(text)
-	;
 
 	# --- unlike posts ---
 
 	@unlike = (post) ->
 		Tumblr.post "https://api.tumblr.com/v2/user/unlike", {"id": post.id, "reblog_key": post.key}
 			.done (data) ->
-				successForUnlike(post.id, data)
+				@id = post.id
+				console.log("unliked post #{id}") if @debug
+				$("#"+id+" a.remove").remove()
+				$("#"+id+" img").remove()
+				$("#"+id+" div.overprint").remove()
+				$("#"+id+" div.play_overlay").remove()
+				$("#"+id+" div.caption").remove()
+				$("#"+id).addClass("removed")
 			.fail (err) ->
-				failForUnlike(data)
-	;
-
-	successForUnlike = (id, data) ->
-		console.log("unliked post #{id}") if @debug
-		$("#"+id+" a.remove").remove()
-		$("#"+id+" img").remove()
-		$("#"+id+" div.overprint").remove()
-		$("#"+id+" div.play_overlay").remove()
-		$("#"+id+" div.caption").remove()
-		$("#"+id).addClass("removed")
-	;
-
-	failForUnlike = (data) ->
-		alert("Sorry, but an error has occurred.")
+				alert("Sorry, but an error has occurred.")
 	;
 
 	# --- infinite scroll ---
@@ -123,18 +80,16 @@ class Likes
 		;
 	;
 
-	# - - -- - --- - -- - - -- - - - ---- -  -- - -- -- - - -  - - - ---- -- - - -
-
 	@startUp = ->
 		console.log "Initialize Oauth.js"
 		OAuth.initialize("v9UrevHg6LXweUdAjasr06NsdY4", {"cache" : true})
 		window.Tumblr = OAuth.create 'tumblr'
 		if (!Tumblr)
 			window.location = "/"
-		setHeaderInfo()
+		Header.setHeaderInfo()
 		ContentHelper.createColumns()
 		getLikes(2)
-		scrollWatch()	
+		scrollWatch()
 	;
 
 window.Likes = Likes

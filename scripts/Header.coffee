@@ -1,8 +1,5 @@
 
 class Header
-
-	# --- user info in header ---
-
 	@setHeaderInfo = () ->
 		# --- get user info ---
 		Tumblr.get "https://api.tumblr.com/v2/user/info"
@@ -26,5 +23,4 @@ class Header
 		blog.attr("href", primaryUrl)
 		blog.html(text)
 	;
-	
 window.Header = Header;
