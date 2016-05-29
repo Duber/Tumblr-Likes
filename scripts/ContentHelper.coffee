@@ -3,6 +3,7 @@
 
 class ContentHelper
 	COLUMNS = 7
+	MIN_HEIGHT = 200
 
 	@debug = false
 	templateCache = {}
@@ -37,7 +38,7 @@ class ContentHelper
 				when "answer" then ContentContext.setContextForAnswer(post, ctx)
 
 			# thumbnail dimensions
-			ctx.height = ctx.thumbnail.height or MIN_HEIGHT
+			ctx.height = ctx?.thumbnail?.height or MIN_HEIGHT
 
 			# strip html from text
 			ctx.text = $("<div>" + ctx.text + "</div>").text()
