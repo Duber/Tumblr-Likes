@@ -1,8 +1,7 @@
 #= require ContentHelper
 
-class @Likes
+class Likes
 	@debug = false
-	@tumblr
 
 	currentOffset = 0
 	isScrolling = false
@@ -20,7 +19,7 @@ class @Likes
 		next = if runs is 1 then etc else -> getLikes(runs- 1, etc)
 
 		# --- GET /v2/user/likes ---
-		Likes.tumblr.get "https://api.tumblr.com/v2/user/likes?offset="+currentOffset
+		Tumblr.get "https://api.tumblr.com/v2/user/likes?offset="+currentOffset
 			.done (data) ->
 				console.log "200 OK /v2/user/likes" if @debug
 				console.log data
@@ -56,7 +55,7 @@ class @Likes
 
 	setHeaderInfo = () ->
 		# --- get user info ---
-		Likes.tumblr.get "https://api.tumblr.com/v2/user/info"
+		Tumblr.get "https://api.tumblr.com/v2/user/info"
 			.done (data) ->
 				console.log "200 OK /v2/user/info" if @debug
 				successForUserInfo(data)
@@ -86,7 +85,7 @@ class @Likes
 	# --- unlike posts ---
 
 	@unlike = (post) ->
-		Likes.tumblr.post "https://api.tumblr.com/v2/user/unlike", {"id": post.id, "reblog_key": post.key}
+		Tumblr.post "https://api.tumblr.com/v2/user/unlike", {"id": post.id, "reblog_key": post.key}
 			.done (data) ->
 				successForUnlike(post.id, data)
 			.fail (err) ->
@@ -128,17 +127,14 @@ class @Likes
 
 	@startUp = ->
 		console.log "Initialize Oauth.js"
-		OAuth.initialize "v9UrevHg6LXweUdAjasr06NsdY4"
-
-		console.log "Get cached credentials"
-		Likes.tumblr = OAuth.create "tumblr"
-
-		# TODO: redirect to '/' if user not login yet ---
+		OAuth.initialize("eUqCWTW-6VpWWcOvj8edJ6aKNUo", {"cache" : true})
+		window.Tumblr = OAuth.create 'tumblr'
+		if (!Tumblr)
+			window.location = "/"
 		setHeaderInfo()
 		ContentHelper.createColumns()
 		getLikes(2)
-		scrollWatch()
-
+		scrollWatch()	
 	;
 
 window.Likes = Likes
