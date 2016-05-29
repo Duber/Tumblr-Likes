@@ -1,6 +1,6 @@
 
 class Header
-	@setHeaderInfo = () ->
+	@setUserInfo = () ->
 		# --- get user info ---
 		Tumblr.get "https://api.tumblr.com/v2/user/info"
 			.done (data) ->

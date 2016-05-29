@@ -10,12 +10,12 @@
     <script type="text/javascript" src="/assets/js/likes.js"></script>
     <script type="text/javascript">
         $(function() {
-            Likes.startUp();
+            Program.run();
 			$("a.remove").on("click", function() {
 				var xBox = $(this);
 
 				if (xBox.hasClass("active")) {
-					Likes.unlike({
+					Unlike.post({
 						id: xBox.attr("data-id"),
 						key: xBox.attr("data-key")
 					})
