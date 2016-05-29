@@ -1,5 +1,4 @@
 #= require ContentHelper
-#= require Header
 
 class Like
 	@debug = false
