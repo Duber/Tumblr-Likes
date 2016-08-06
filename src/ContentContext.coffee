@@ -2,7 +2,8 @@
 class ContentContext
 	MAX_HEIGHT = 200
 	MAX_WIDTH = 200
-	
+	dummyThumbnail = true
+
 	@setContextForChat = (post, ctx) ->
 		ctx.type = "conversation"
 		ctx.chat = []
@@ -39,10 +40,10 @@ class ContentContext
 			img = if sizes.length-3 < 0 then sizes.length-1 else sizes.length-3
 			img = sizes[img]
 			thumbnail.url = img.url
-			#thumbnail.height = if img.height > MAX_HEIGHT then MAX_HEIGHT else img.height
-			#thumbnail.width = if img.width > MAX_WIDTH then MAX_WIDTH else img.width
 			thumbnail.height = img.height
 			thumbnail.width = img.width
+			if dummyThumbnail
+				thumbnail.url = buildDummyThumbnailUrl(thumbnail.height,thumbnail.width)
 		;
 	;
 
@@ -87,7 +88,10 @@ class ContentContext
 		thumbnail.url = post.thumbnail_url
 		thumbnail.height = if post.thumbnail_height > MAX_HEIGHT then MAX_HEIGHT else post.thumbnail_height
 		thumbnail.width = if post.thumbnail_width > MAX_WIDTH then MAX_WIDTH else post.thumbnail_width
-		#thumbnail.height = post.thumbnail_height
-		#thumbnail.width = post.thumbnail_width
+		if dummyThumbnail
+			thumbnail.url = buildDummyThumbnailUrl(thumbnail.height,thumbnail.width)
 		ctx.thumbnail = thumbnail
 	;
+
+	buildDummyThumbnailUrl = (height, width) ->
+		return "http://dummyimage.com/" + height + "x" + width
