@@ -4,7 +4,7 @@
 
 class Program
 	@debug = false
-	@OAuthKey = "v9UrevHg6LXweUdAjasr06NsdY4" 
+	@OAuthKey = "v9UrevHg6LXweUdAjasr06NsdY4"
 	isScrolling = false
 
 	@run = ->
@@ -21,13 +21,9 @@ class Program
 	infiniteScroll = ->
 		win = $(window)
 		win.scroll ->
-			return if isFinished
-
 			if win.scrollTop() >= $(document).height() - win.height() - 200
 				return if isScrolling
 				isScrolling = true
 				Like.get(2)
-			;
-		;
-	;
+
 window.Program = Program

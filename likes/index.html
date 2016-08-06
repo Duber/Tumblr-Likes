@@ -11,23 +11,21 @@
     <script type="text/javascript">
         $(function() {
             Program.run();
-			$("a.remove").on("click", function() {
-				var xBox = $(this);
-
-				if (xBox.hasClass("active")) {
-					Unlike.post({
-						id: xBox.attr("data-id"),
-						key: xBox.attr("data-key")
-					})
-				} else {
-					xBox.addClass("active");
-				}
-
-				return false;
-			});
+            $("a.remove").on("click", function() {
+                var xBox = $(this);
+                if (xBox.hasClass("active")) {
+                    Unlike.post({
+                        id: xBox.attr("data-id"),
+                        key: xBox.attr("data-key")
+                    })
+                } else {
+                    xBox.addClass("active");
+                }
+                return false;
+            });
             $("#logout").click(function(){
-               OAuth.clearCache();
-               window.location = "/end.html";
+                OAuth.clearCache();
+                window.location = "/end.html";
             });
         });
     </script>
