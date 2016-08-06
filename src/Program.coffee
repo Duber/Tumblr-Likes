@@ -3,12 +3,11 @@
 #= require ContentHelper
 
 class Program
-	@debug = false
+	@debug = true
 	@OAuthKey = "v9UrevHg6LXweUdAjasr06NsdY4"
-	isScrolling = false
 
 	@run = ->
-		console.log "Initialize Oauth.js"
+		console.log "Initialize Oauth.js" if @debug
 		OAuth.initialize(Program.OAuthKey, {"cache" : true})
 		window.Tumblr = OAuth.create 'tumblr'
 		if (!Tumblr)
@@ -21,9 +20,7 @@ class Program
 	infiniteScroll = ->
 		win = $(window)
 		win.scroll ->
-			if win.scrollTop() >= $(document).height() - win.height() - 200
-				return if isScrolling
-				isScrolling = true
+			if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)
 				Like.get(2)
 
 window.Program = Program

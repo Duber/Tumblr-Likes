@@ -58,16 +58,13 @@ class ContentHelper
 		# is cached?
 		unless templateCache[name]
 			ctx = {}
-
 			$.ajax
 				url: "/assets/templates/#{name}.mustache"
 				async: false
 				context: ctx
-
 				success: (data) ->
 					console.log "retrieved template '#{name}' from file." if @debug
 					ctx.data = data
-
 				failure: ->
 					console.log "cold not retrieve template '#{name}' from file." if @debug
 
@@ -118,4 +115,3 @@ class ContentHelper
 	trim = (string) ->
 		string.replace /^\s*|\s*$/g, ""
 	;
-
