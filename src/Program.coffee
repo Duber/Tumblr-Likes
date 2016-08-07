@@ -13,8 +13,7 @@ class Program
 		if (!Tumblr)
 			window.location = "/"
 		Header.setUserInfo()
-		ContentHelper.createColumns()
-		Like.get(2)
+		Like.get(4)
 		infiniteScroll()
 
 	infiniteScroll = ->

@@ -61,3 +61,7 @@ a.brick {
     margin-top: 3%;
     display: block;
 }
+
+.grid-item {
+  margin-bottom: 10px;
+}

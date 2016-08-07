@@ -2,12 +2,8 @@
 
 
 class ContentHelper
-	COLUMNS = 7
-	MIN_HEIGHT = 200
-
-	@debug = false
+	@debug = true
 	templateCache = {}
-	container = ""
 
 	@setContent = (posts) ->
 		if @debug
@@ -31,14 +27,7 @@ class ContentHelper
 
 			switch post.type
 				when "video"  then ContentContext.setContextForVideo(post, ctx)
-				when "audio"  then ContentContext.setContextForAudio(post, ctx)
 				when "photo"  then ContentContext.setContextForPhoto(post, ctx)
-				when "quote"  then ContentContext.setContextForQuote(post, ctx)
-				when "chat"   then ContentContext.setContextForChat(post, ctx)
-				when "answer" then ContentContext.setContextForAnswer(post, ctx)
-
-			# thumbnail dimensions
-			ctx.height = ctx?.thumbnail?.height or MIN_HEIGHT
 
 			# strip html from text
 			ctx.text = $("<div>" + ctx.text + "</div>").text()
@@ -90,26 +79,13 @@ class ContentHelper
 
 	# --- helpers ---
 
-	@createColumns = () ->
-		# create a new container, add a date object
-		container = $("<div class=\"container\">")
-
-		i = 0
-
-		while i < COLUMNS
-			container.append $("<ul class=\"column\">")
-			++i
-
-		$(".grid").append container
-	;
-
 	append = (html) ->
-		nodes = container.find("div.brick")
-		col = (nodes.length) % COLUMNS
-		node = $("<li class=\"stack\" style=\"display:none;\">")
-		node.append(html)
-		$(container.find("ul.column")[col]).append(node)
-		node.fadeIn(600)
+		$grid = $("div.grid")
+		$grid.append(html)
+		$grid.imagesLoaded().progress( () ->
+			$grid.masonry('reloadItems');
+			$grid.masonry('layout');
+		);
 	;
 
 	trim = (string) ->

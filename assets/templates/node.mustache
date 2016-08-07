@@ -1,17 +1,17 @@
-<div class="brick {{type}}" id="{{id}}">
+<div class="grid-item" id="{{id}}">
 	{{! dynamic partial rendering }}
 	{{#dynamicPartial}}
 	    _{{type}}
 	{{/dynamicPartial}}
 
 	{{! always render overlay }}
-	<div class="overlay">
+	<!-- <div class="overlay">
 		<a target="_blank" href="{{url}}">
-			<div style="height:100%;width:100%;">
+			<div>
 				<div>X</div>
-				<!-- <a class="remove" href="#" data-id="{{id}}" data-key="{{key}}">X</a> -->
-				<div class="inner blogName">{{user}}</div>	
+				<a class="remove" href="#" data-id="{{id}}" data-key="{{key}}">X</a>
+				<div class="inner blogName">{{user}}</div>
 			</div>
 		</a>
-	</div>
+	</div> -->
 </div>
