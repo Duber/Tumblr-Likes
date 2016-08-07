@@ -26,13 +26,9 @@ class Like
 				console.log err if @debug
 				next()
 
-		console.log "finished getting likes" if @debug
-	;
-
 	successForLikes = (data) ->
 		# if less than batch size, we must have run out!
 		if currentOffset >= data.response.liked_count
 			console.log "Reached end of likes" if @debug
 			$("#loading").fadeOut 800
 		ContentHelper.setContent(data.response.liked_posts)
-	;

@@ -1,17 +1,14 @@
-<div class="grid-item" id="{{id}}">
+<div class="grid-item" id="{{id}}" onclick="window.open('{{url}}', '_blank')">
 	{{! dynamic partial rendering }}
 	{{#dynamicPartial}}
 	    _{{type}}
 	{{/dynamicPartial}}
 
 	{{! always render overlay }}
-	<!-- <div class="overlay">
-		<a target="_blank" href="{{url}}">
-			<div>
-				<div>X</div>
-				<a class="remove" href="#" data-id="{{id}}" data-key="{{key}}">X</a>
-				<div class="inner blogName">{{user}}</div>
-			</div>
-		</a>
-	</div> -->
+	<div class="overlay" width="100%" height="100%">
+		<div width="100%" height="100%">
+			<!-- <a class="remove" href="#" data-id="{{id}}" data-key="{{key}}">X</a> -->
+			<div class="inner blogName">{{user}}</div>
+		</div>
+	</div>
 </div>
