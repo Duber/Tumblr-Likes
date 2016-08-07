@@ -20,6 +20,6 @@ class Program
 		win = $(window)
 		win.scroll ->
 			if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)
-				Like.get(2)
+				Like.get(4)
 
 window.Program = Program
