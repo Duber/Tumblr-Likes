@@ -24,11 +24,11 @@ class ContentHelper
 				when "video"  then ContentContext.setContextForVideo(post, ctx)
 				when "photo"  then ContentContext.setContextForPhoto(post, ctx)
 
-			append(renderTemplate(ctx))
+			append(renderTemplate(templateName, ctx))
 		;
 	;
 
-	renderTemplate = (data) ->
+	renderTemplate = (templateName, data) ->
 		template = ""
 		# is cached?
 		unless templateCache[templateName]
@@ -67,11 +67,9 @@ class ContentHelper
 
 	append = (html) ->
 		$grid = $("div.grid")
-		$grid.append(html)
-		$grid.imagesLoaded().progress( () ->
-			$grid.masonry('reloadItems');
-			$grid.masonry('layout');
-		);
+		$newItem = $(html);
+		$grid.append($newItem);
+		$grid.masonry('appended', $newItem)
 	;
 
 	trim = (string) ->

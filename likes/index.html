@@ -12,13 +12,14 @@
     <script type="text/javascript" src="/assets/js/likes.js"></script>
     <script type="text/javascript">
         $(function() {
-            var $grid = $('.grid').masonry({
-                itemSelector: '.grid-item',
-                gutter: 10,
-                fitWidth: true
-            });
-            $grid.imagesLoaded().progress( function() {
-                $grid.masonry();
+            var $grid = $('.grid');
+            $grid.imagesLoaded(function() {
+                $grid.masonry({
+                    itemSelector: '.grid-item',
+                    gutter: 10,
+                    columnWidth: 250,
+                    fitWidth: true
+                });
             });
 
             Program.run();
