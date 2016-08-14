@@ -41,10 +41,7 @@ class Like
 		history.replaceState( currentState, "Tumblr Likes Grid", path)
 
 	formatDateForUrl = (date) ->
-		day = date.getDate()
-		month = date.getMonth() + 1
-		year = date.getFullYear()
-		return intToString(day) + intToString(month) + year
+		return date.toLocaleDateString().split('/').join('-')
 
 	intToString = (number) ->
 		if (number < 10)
