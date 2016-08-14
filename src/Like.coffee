@@ -3,7 +3,6 @@
 class Like
 	@debug = true
 	likedDate = new Date()
-	currentOffset = 0
 	processing = false
 
 	@get = (runs) ->
@@ -27,7 +26,6 @@ class Like
 					$("#loading").fadeOut 800
 				ContentHelper.RenderPosts(posts)
 				likedDate = new Date(posts[posts.length - 1].liked_timestamp * 1000)
-				currentOffset += posts.length
 				processing = false
 				next()
 			.fail (err) ->
