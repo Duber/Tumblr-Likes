@@ -6,10 +6,6 @@ class ContentHelper
 	templateName = "node"
 
 	@RenderPosts = (posts) ->
-		if @debug
-			console.log "received posts:"
-			console.log posts
-
 		for post in posts
 			#templating
 			ctx = createContext()
