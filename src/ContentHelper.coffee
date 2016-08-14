@@ -5,7 +5,7 @@ class ContentHelper
 	templateCache = {}
 	templateName = "node"
 
-	@setContent = (posts) ->
+	@RenderPosts = (posts) ->
 		if @debug
 			console.log "received posts:"
 			console.log posts
