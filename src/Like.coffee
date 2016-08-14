@@ -27,8 +27,21 @@ class Like
 				ContentHelper.RenderPosts(posts)
 				lastPost = posts[posts.length - 1]
 				likedDate = new Date(lastPost.liked_timestamp * 1000)
+				currentState = history.state || {}
+				currentState.likedDate = likedDate
+				path = getPathFrom(likedDate)
+				history.replaceState( currentState, "Tumblr Likes Grid", path)
 				processing = false
 				next()
 			.fail (err) ->
 				console.log err if debug
 				next()
+	getPathFrom = (date) ->
+		day = date.getDate()
+		month = date.getMonth() + 1
+		year = date.getFullYear()
+		return intToString(day) + intToString(month) + year
+	intToString = (number) ->
+		if (number < 10)
+			return "0" + number
+		return number
