@@ -30,7 +30,7 @@ class ContentHelper
 		unless templateCache[templateName]
 			ctx = {}
 			$.ajax
-				url: "assets/templates/#{templateName}.mustache"
+				url: "../assets/templates/#{templateName}.mustache"
 				async: false
 				context: ctx
 				success: (data) ->
