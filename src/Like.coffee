@@ -1,7 +1,7 @@
 #= require ContentHelper
 
 class Like
-	debug = true
+	debug = false
 	likedDate = new Date()
 	processing = false
 
@@ -16,7 +16,7 @@ class Like
 		# --- GET /v2/user/likes ---
 		Tumblr.get "https://api.tumblr.com/v2/user/likes?before="+ (likedDate.getTime() / 1000)
 			.done (data) ->
-				console.log "200 OK /v2/user/likes" if debug
+				console.log "200 OK GET likes" if debug
 				console.log data if debug
 				posts = data.response.liked_posts
 				numberOfPosts = data.response.liked_count
@@ -27,20 +27,25 @@ class Like
 				ContentHelper.RenderPosts(posts)
 				lastPost = posts[posts.length - 1]
 				likedDate = new Date(lastPost.liked_timestamp * 1000)
-				currentState = history.state || {}
-				currentState.likedDate = likedDate
-				path = getPathFrom(likedDate)
-				history.replaceState( currentState, "Tumblr Likes Grid", path)
+				updateUrl(likedDate)
 				processing = false
 				next()
 			.fail (err) ->
 				console.log err if debug
 				next()
-	getPathFrom = (date) ->
+
+	updateUrl = (date) ->
+		currentState = history.state || {}
+		currentState.likedDate = likedDate
+		path = formatDateForUrl(likedDate)
+		history.replaceState( currentState, "Tumblr Likes Grid", path)
+
+	formatDateForUrl = (date) ->
 		day = date.getDate()
 		month = date.getMonth() + 1
 		year = date.getFullYear()
 		return intToString(day) + intToString(month) + year
+
 	intToString = (number) ->
 		if (number < 10)
 			return "0" + number
