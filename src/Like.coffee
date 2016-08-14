@@ -5,8 +5,9 @@ class Like
 	likedDate = new Date()
 	processing = false
 
-	@get = (runs) ->
+	@get = (runs, beforeDate = likedDate) ->
 		return if processing
+		likedDate = beforeDate
 		console.log "getting likes before  " + likedDate if debug
 		processing = true
 
@@ -37,7 +38,7 @@ class Like
 	updateUrl = (date) ->
 		currentState = history.state || {}
 		currentState.likedDate = likedDate
-		path = formatDateForUrl(likedDate)
+		path = "?before=" + formatDateForUrl(likedDate)
 		history.replaceState( currentState, "Tumblr Likes Grid", path)
 
 	formatDateForUrl = (date) ->
