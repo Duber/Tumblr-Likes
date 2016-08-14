@@ -25,7 +25,8 @@ class Like
 					console.log "Reached end of likes" if @debug
 					$("#loading").fadeOut 800
 				ContentHelper.RenderPosts(posts)
-				likedDate = new Date(posts[posts.length - 1].liked_timestamp * 1000)
+				lastPost = posts[posts.length - 1]
+				likedDate = new Date(lastPost.liked_timestamp * 1000)
 				processing = false
 				next()
 			.fail (err) ->
