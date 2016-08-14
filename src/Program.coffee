@@ -11,7 +11,7 @@ class Program
 		OAuth.initialize(Program.OAuthKey, {"cache" : true})
 		window.Tumblr = OAuth.create 'tumblr'
 		if (!Tumblr)
-			window.location = "/"
+			window.location = "."
 		Header.setUserInfo()
 		Like.get(4)
 		infiniteScroll()
